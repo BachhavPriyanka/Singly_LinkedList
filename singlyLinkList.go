@@ -1,8 +1,7 @@
-// Define a method to add a node to the end of the linked list
+// Define a method to remove the last node from the linked list
 package main
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -13,6 +12,24 @@ type Node struct {
 
 type LinkedList struct {
 	Head *Node
+}
+
+func (ll *LinkedList) RemoveLast() {
+	current := ll.Head
+
+	if ll.Head == nil {
+		return
+	}
+
+	if ll.Head.Next == nil {
+		ll.Head = nil
+		return
+	}
+
+	for current.Next.Next != nil {
+		current = current.Next
+	}
+	current.Next = nil
 }
 
 func (ll *LinkedList) AddAtLast(value int) {
@@ -40,14 +57,11 @@ func (ll *LinkedList) AddAtFirst(value int) {
 	ll.Head = newNode
 }
 
-func (ll *LinkedList) RemoveFront() (int, error) {
+func (ll *LinkedList) RemoveFront() {
 	if ll.Head == nil {
-		return 0, errors.New("linked list is empty")
+		fmt.Println("Empty")
 	}
-
-	data := ll.Head.Data
 	ll.Head = ll.Head.Next
-	return data, nil
 
 }
 
@@ -62,10 +76,16 @@ func (list *LinkedList) Display() {
 
 func main() {
 	list := &LinkedList{}
+	//Adding Data into list
 	list.AddAtLast(1)
 	list.AddAtLast(2)
 	list.AddAtLast(3)
-	//list.RemoveFront()
+	//Adding Data at first
 	list.AddAtFirst(11)
+	//Removing Data from from
+	list.RemoveFront()
+	//Removing Data from last
+	list.RemoveLast()
+
 	list.Display()
 }
