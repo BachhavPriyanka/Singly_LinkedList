@@ -1,7 +1,10 @@
-// Define a method to add a node to the front of the linked list
+// Define a method to remove the front node from the linked list
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type Node struct {
 	Data int
@@ -12,19 +15,30 @@ type LinkedList struct {
 	Head *Node
 }
 
-func (l *LinkedList) AddAtFirst(value int) {
+func (ll *LinkedList) AddAtFirst(value int) {
 	newNode := &Node{Data: value}
 
-	if l.Head == nil {
-		l.Head = newNode
+	if ll.Head == nil {
+		ll.Head = newNode
 		return
 	}
-	current := l.Head
+	current := ll.Head
 
 	for current.Next != nil {
 		current = current.Next
 	}
 	current.Next = newNode
+}
+
+func (ll *LinkedList) RemoveFront() (int, error) {
+	if ll.Head == nil {
+		return 0, errors.New("linked list is empty")
+	}
+
+	data := ll.Head.Data
+	ll.Head = ll.Head.Next
+	return data, nil
+
 }
 
 func (list *LinkedList) Display() {
@@ -41,5 +55,8 @@ func main() {
 	list.AddAtFirst(1)
 	list.AddAtFirst(2)
 	list.AddAtFirst(3)
+	list.RemoveFront()
+	list.RemoveFront()
+
 	list.Display()
 }
