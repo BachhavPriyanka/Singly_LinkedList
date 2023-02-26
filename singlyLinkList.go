@@ -1,4 +1,4 @@
-// Define a method to remove the last node from the linked list
+// Define a method to insert a node at a specific index
 package main
 
 import (
@@ -12,6 +12,22 @@ type Node struct {
 
 type LinkedList struct {
 	Head *Node
+}
+
+func (ll *LinkedList) AddAtMiddle(value int, pos int) {
+	newNode := &Node{Data: value}
+
+	if pos == 1 {
+		newNode.Next = ll.Head
+		ll.Head = newNode
+		return
+	}
+	current := ll.Head
+	for i := 0; i < pos-2; i++ {
+		current = current.Next
+	}
+	newNode.Next = current.Next
+	current.Next = newNode
 }
 
 func (ll *LinkedList) RemoveLast() {
@@ -81,11 +97,12 @@ func main() {
 	list.AddAtLast(2)
 	list.AddAtLast(3)
 	//Adding Data at first
-	list.AddAtFirst(11)
+	//list.AddAtFirst(11)
 	//Removing Data from from
-	list.RemoveFront()
+	//list.RemoveFront()
 	//Removing Data from last
-	list.RemoveLast()
-
+	//list.RemoveLast()
+	//Add at Middle
+	list.AddAtMiddle(22, 1)
 	list.Display()
 }
